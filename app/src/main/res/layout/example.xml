@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true">
+
+    <ViewSwitcher
+        android:id="@+id/viewContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/renderFile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:animateFirstView="true">
+
+        <RelativeLayout
+            android:id="@+id/basicView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/instructionBasic"
+                style="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:clickable="false"
+                android:inputType="none"
+                android:text="BASIC use case: effect parameters loaded from a preset file.\nPlease select a preset:"
+                android:textIsSelectable="false" />
+
+            <Spinner
+                android:id="@+id/presetList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/instructionBasic"
+                android:layout_centerHorizontal="true"
+                android:clickable="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/advancedView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/instructionAdvanced"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:clickable="false"
+                android:inputType="none"
+                android:text="ADVANCED use case: effect configured through code and parameters dynamically adjustable at runtime."
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/instructionAdvanced2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/instructionAdvanced"
+                android:clickable="false"
+                android:inputType="none"
+                android:text="Please start rendering for the controls to appear."
+                android:textIsSelectable="false" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="false"
+                android:layout_below="@+id/instructionAdvanced"
+                android:layout_centerInParent="true">
+
+                <LinearLayout
+                    android:id="@+id/advancedViewControls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"></LinearLayout>
+            </FrameLayout>
+        </RelativeLayout>
+
+    </ViewSwitcher>
+
+    <Button
+        android:id="@+id/renderFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/renderMicrophone"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:text="Render sound from file" />
+
+    <Button
+        android:id="@+id/renderMicrophone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/viewSwitcher"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:text="Render sound from microphone" />
+
+    <Button
+        android:id="@+id/stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/message"
+        android:layout_alignParentRight="true"
+        android:text="Stop rendering" />
+
+    <Button
+        android:id="@+id/viewSwitcher"
+        style="@android:style/Widget.Holo.Light.Button.Inset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/message"
+        android:layout_alignParentLeft="true"
+        android:clickable="true"
+        android:text="Switch example" />
+
+    <TextView
+        android:id="@+id/message"
+        style="@android:style/TextAppearance.DeviceDefault.Small"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:inputType="none"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textIsSelectable="true" />
+
+    <ProgressBar
+        android:id="@+id/activityIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/message"
+        android:layout_toLeftOf="@+id/stop"
+        android:layout_toRightOf="@+id/viewSwitcher"
+        android:visibility="invisible" />
+
+</RelativeLayout>

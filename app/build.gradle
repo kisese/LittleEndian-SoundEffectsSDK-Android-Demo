@@ -1,0 +1,89 @@
+apply plugin: 'com.android.model.application'
+
+apply from: '../le/utility/utility.gradle'
+
+model {
+    repositories {
+        libs(PrebuiltLibraries) {
+            le_utility {
+                headers.srcDir("../include/le/utility")
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = le_lib_file("LE_Utility", targetPlatform, buildType)
+                }
+            }
+            le_sw_sdk {
+                headers.srcDir("../include/le/spectrumworx")
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = le_lib_file("LE_SoundEffects_SDK", targetPlatform, buildType)
+                }
+            }
+            le_audioio {
+                headers.srcDir("../include/le/audioio")
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = le_lib_file("LE_AudioIO_SDK", targetPlatform, buildType)
+                }
+            }
+        }
+    }
+
+    android {
+        compileSdkVersion 23
+        buildToolsVersion "23.0.3"
+
+        defaultConfig {
+            applicationId "demo.littleendiandemo.app"
+            minSdkVersion.apiLevel = 10
+            targetSdkVersion.apiLevel = 23
+        }
+        /*
+           * native build settings: taking default for almost everything
+           */
+        ndk {
+            moduleName = 'app'
+            toolchain = 'clang'
+            CFlags.addAll(['-Wall'])
+            ldLibs  .addAll( ["android", "atomic", "log", "OpenSLES"] ) // armeabi builds
+            cppFlags.addAll( ["-std=c++14", "-fvisibility=hidden", "-Wall", "-Wno-multichar", "-Wno-non-template-friend", "-Wno-unused-local-typedefs", "-Wno-unknown-warning-option"] )
+            cppFlags.add( "-I${le_sdk_path}/include".toString() )
+            //toolchain   = 'clang'
+            //stl         = 'c++_static'
+            toolchain   = 'gcc'
+            stl         = 'gnustl_static'
+            abiFilters.addAll( ["x86", "armeabi-v7a"] )
+        }
+
+        buildTypes {
+            release {
+                minifyEnabled = false
+                proguardFiles.add(file('proguard-rules.txt'))
+            }
+        }
+
+        sources {
+            main {
+                jni {
+                    dependencies {
+                        library "le_utility" linkage "static"
+                        library "le_sw_sdk"  linkage "static"
+                        library "le_audioio" linkage "static"
+                    }
+                }
+            }
+        }
+    }
+
+    components.android {
+        binaries.afterEach { binary ->
+            if ( buildType.name == 'release' ) {
+                binary.mergedNdkConfig.cppFlags.addAll([ "-Os", "-DNDEBUG" ])
+                binary.mergedNdkConfig.ldFlags .addAll([ "-Wl,--gc-sections", "-Wl,--icf=all", "-fuse-ld=gold" ])
+            }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+}

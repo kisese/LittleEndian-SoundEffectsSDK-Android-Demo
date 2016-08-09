@@ -1,0 +1,4 @@
+include ':app'
+include ':le:audioio'
+include ':le:spectrumworx'
+include ':le:utility'

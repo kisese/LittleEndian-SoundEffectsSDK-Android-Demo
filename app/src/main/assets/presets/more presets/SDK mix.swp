@@ -1,0 +1,13 @@
+<SpectrumWorxPreset Version="3.0" LastModified="14.01.2016 13:54" Comment="Mix side and main.">
+	<Global In="1" Out="1" Mix="1" FFT_size="1024" Overlap_factor="4" Window_type="0" Input_mode="0" Sample="background.wav"/>
+	<Modules>
+		<Blender Bypass="0">
+			<Gain sync="1">0</Gain>
+			<Wet sync="1">100</Wet>
+			<Start_frequency sync="1">0</Start_frequency>
+			<Stop_frequency sync="1">1</Stop_frequency>
+			<Amount sync="1">15</Amount>
+		</Blender>
+	</Modules>
+</SpectrumWorxPreset>
+
